@@ -19,7 +19,13 @@ fn parse_bot_api(url: &str) {
         .next()
         .unwrap();
     let mut builder = TeleTypeBuilder::new();
+
+    // TODO using next() and checking if a node is "\n", it should be easier to parse,
+    // so I can use a more common builder type, without states,
+    // that always builds just one type at a time.
     for node in content.children() {
+        //println!("{:?}", node.name());
+
         if node.is(Name("h4")) {
             let is_camel = is_camel_case(node.text());
             let has_anchor = has_anchor(node);
@@ -27,8 +33,12 @@ fn parse_bot_api(url: &str) {
             if is_camel {
                 builder.new_type(node.text());
             }
-            if let Some(next) = node.descendants().next() {
-                println!("{:?}", next.name());
+            if let Some(mut next) = node.next() {
+                // NOTE: there are newlines which are considered to be nodes!
+                // we need to jump over them!
+                //println!("before: {:?}", next.html());
+                next = next.next().unwrap();
+                //println!("after: {:?}", next.html());
                 if next.is(Name("p")) {
                     builder.add_description(next.text());
                 }
@@ -39,24 +49,13 @@ fn parse_bot_api(url: &str) {
 }
 
 #[derive(Debug)]
-enum BuilderState {
-    Empty,
-    DescMissing, // have a new struct and add description
-    Fields,      // add fields or begin new type
-}
-
-#[derive(Debug)]
 struct TeleTypeBuilder {
     types: Vec<TeleType>,
-    state: BuilderState,
 }
 
 impl TeleTypeBuilder {
     fn new() -> Self {
-        TeleTypeBuilder {
-            types: Vec::new(),
-            state: BuilderState::Empty,
-        }
+        TeleTypeBuilder { types: Vec::new() }
     }
 
     fn new_type<T: ToString>(&mut self, name: T) {
@@ -69,12 +68,6 @@ impl TeleTypeBuilder {
     }
 
     fn add_description<T: ToString>(&mut self, desc: T) {
-        use BuilderState::*;
-        match self.state {
-            Empty => return,
-            Fields => return,
-            _ => {}
-        }
         let last = self.types.last_mut();
         match last {
             Some(t) => t.description = Some(desc.to_string()),

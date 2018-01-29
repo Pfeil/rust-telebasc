@@ -1,9 +1,9 @@
 [package]
-name = "telegram-bot-api-parser"
+name = "telebasc"
 version = "0.1.0"
 authors = ["Andreas Pfeil <andreas.pfeil@student.kit.edu>"]
 
 [dependencies]
 reqwest = "0.8.4"
-scraper = "0.4.0"
+# scraper = "0.4.0"
 select = {git = "https://github.com/utkarshkukreti/select.rs", tag = "0.4.1"}

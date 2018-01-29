@@ -12,12 +12,12 @@ I used another api model in the past, but I had some problems with it. Unfortuna
 [scrapingarticle]: https://codeburst.io/web-scraping-in-rust-881b534a60f7
 
 
-# Status of the project: vvwip!
+# Status of the project: proof-of-concept
 
-> Very very work in progress. Not ready at all!
+> proof-of-concept. Not ready at all!
 It will be available on cargo when it's ready to test.
 
-It currently contains only some basic evaluations on how and if I can do it. So, see it as a protoype. I am currently rewriting it.
+It currently contains only some basic evaluations on how and if I can do it. So, see it as a proof-of-concept for now. I am currently rewriting it.
 
 
 # Goals
@@ -35,6 +35,6 @@ Very basic. It will contain structs as data-holders, which will be serializeable
 
 ## Then what is the difference to other rust-telegram-bot-api-model-scrapers?
 
-It's written in rust. It's really tha main reason. This way, someone who wants to write something in rust, can adjust it, if needed, without touching another language. The code shall be maintainable and readable, so adjusting it will be easy. That's not much of a reason? True, but I thought it's a good exercise for a beginner. Also, rust isn't the type of language that would be considered perfect for this task, so I just needed to do it! ;)
+It's written in rust. It's really the main reason. This way, someone who wants to write something in rust, can adjust it, if needed, without touching another language. The code shall be maintainable and readable, so adjusting it will be easy. That's not much of a reason? True, but I thought it's a good exercise for a beginner. Also, rust isn't the type of language that would be considered perfect for this task, so I just needed to do it! ;)
 
 Also, since this project is managed using `cargo`, you can add it as a subproject (i.e. using cargo workspaces) to have the scraper/generator bound to your project.
